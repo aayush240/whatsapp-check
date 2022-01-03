@@ -9,7 +9,6 @@ session_start();
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="apple-touch-icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/174/174879.png" />
 		<meta name="apple-mobile-web-app-title" content="Check Number" />
-		 <script src="https://www.google.com/recaptcha/api.js"></script>
 		<link rel="shortcut icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/174/174879.png" />
 
 		<link rel="mask-icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/174/174879.png" color="#111" />
@@ -470,7 +469,7 @@ session_start();
 				</div>
 				
 				<div style="padding-top: 20px;">
-				<button class="g-recaptcha" data-sitekey="6LdudOodAAAAAF5B8ChlnH8BcMiyM2QqT_4s7hxM" data-callback='onSubmit' data-action='submit' type="submit" id="check" value="Submit">Check</button>
+				<button type="submit" id="check" value="Submit">Check</button>
 				</div>
 			</form>
 		</div>
@@ -560,9 +559,4 @@ foreach ($data as $value) {
 			</table>
 		</div>
 	</body>
-	 <script>
-	   function onSubmit(token) {
-	     document.getElementById("demo-form").submit();
-	   }
-	 </script>
 </html>
