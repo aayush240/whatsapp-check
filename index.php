@@ -1,6 +1,7 @@
 <?php 
 // Start the session
 session_start();
+echo "ok";
 ?>
 <!DOCTYPE html>
 <html lang="en">
