@@ -250,7 +250,7 @@ session_start();
 		<p class="search__title">
 			Go ahead, Check WhatsApp numbers
 		</p>
-		<form>
+		<form id="myForm">
 			<div style="padding-top: 20px; display: flex; justify-content: center;">
 				<!-- country codes (ISO 3166) and Dial codes. -->
 				<select class="country_input" id="country__input" name="countryCode" id="">
@@ -496,8 +496,8 @@ session_start();
 			$("form").submit(function(e){
 				e.preventDefault();
 				if(grecaptcha.getResponse() == "") {
-					e.preventDefault();
 					alert("Plese check the Captcha.");
+					document.getElementById("myForm").reset();
 				} else {
 					var numbers = document.getElementById("search__input").value;
 					var country = document.getElementById("country__input").value;
@@ -538,6 +538,7 @@ session_start();
 					$data = json_decode($response, true);
 
 					?>
+					document.getElementById("myForm").reset();
 				}
 			});
 		});
