@@ -539,6 +539,7 @@ session_start();
 
 					?>
 					document.getElementById("myForm").reset();
+					grecaptcha.reset();
 				}
 			});
 		});
