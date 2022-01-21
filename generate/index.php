@@ -1,12 +1,9 @@
-<?php 
-// Start the session
-session_start();
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 	<link rel="apple-touch-icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/174/174879.png" />
 	<meta name="apple-mobile-web-app-title" content="Check Number" />
 
@@ -14,8 +11,9 @@ session_start();
 
 	<link rel="mask-icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/174/174879.png" color="#111" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<title>WhatsApp - Check Number</title>
+	<title>WhatsApp - Create Link & QR code</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 	<style>
@@ -31,7 +29,7 @@ session_start();
 		}
 
 		.search__container {
-			padding-top: 64px;
+			padding-top: 110px;
 		}
 
 		.search__title {
@@ -43,7 +41,7 @@ session_start();
 
 		.search__input {
 			margin-left: 10px;
-			width:  30%;
+			width:  40%;
 			padding: 12px 24px;
 			background-color: transparent;
 			transition: transform 250ms ease-in-out;
@@ -52,12 +50,31 @@ session_start();
 
 			color: #575756;
 			background-color: transparent;
-
-			background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E");
 			background-repeat: no-repeat;
 			background-size: 18px 18px;
 			background-position: 95% center;
 			border-radius: 50px;
+			border: 1px solid #575756;
+			transition: all 250ms ease-in-out;
+			backface-visibility: hidden;
+			transform-style: preserve-3d;
+			display:inline-block;
+		}
+		.message__input {
+			margin-left: 10px;
+			width:  50%;
+			padding: 12px 24px;
+			background-color: transparent;
+			transition: transform 250ms ease-in-out;
+			font-size: 14px;
+			line-height: 18px;
+
+			color: #575756;
+			background-color: transparent;
+			background-repeat: no-repeat;
+			background-size: 18px 18px;
+			background-position: 95% center;
+			border-radius: 20px;
 			border: 1px solid #575756;
 			transition: all 250ms ease-in-out;
 			backface-visibility: hidden;
@@ -70,7 +87,7 @@ session_start();
 			transition: transform 250ms ease-in-out;
 			font-size: 14px;
 			line-height: 18px;
-			width: 7.7%;
+			width: 10%;
 			color: #575756;
 			background-color: transparent;
 			background-repeat: no-repeat;
@@ -111,6 +128,22 @@ session_start();
 			outline: 0;
 			border: 1px solid transparent;
 			border-bottom: 1px solid #575756;
+			border-radius: 0;
+			background-position: 100% center;
+		}
+
+		.message__input::placeholder {
+			color: rgba(87, 87, 86, 0.8);
+			text-transform: uppercase;
+			letter-spacing: 1.5px;
+		}
+
+		.message__input:hover,
+		.message__input:focus {
+			padding: 12px 0;
+			outline: 0;
+			border: 1px solid transparent;
+			border-bottom: 2px solid #228B22;
 			border-radius: 0;
 			background-position: 100% center;
 		}
@@ -174,22 +207,6 @@ session_start();
 			opacity: 1;
 			transition: 0s
 		}
-		@media only screen and (max-width: 900px) {
-			.search__input {
-				width: 60%;
-			}
-			.country_input {
-				width: 20%;
-			}
-		}
-		@media only screen and (max-width: 450px) {
-			.search__input {
-				width: 60%;
-			}
-			.country_input {
-				width: 20%;
-			}
-		}
 
 		/* For Results */
 		table {
@@ -209,7 +226,7 @@ session_start();
 		}
 
 		tr:nth-child(even) {
-			background-color: #f2f2f2
+			background-color: white;
 		}
 
 		.fa-check {
@@ -230,6 +247,114 @@ session_start();
 		.g-recaptcha {
 			display: inline-block;
 		}
+		.copy_button {
+		  background-color: white;
+		  border: none;
+		  color: #00B000;
+		  padding: 0px 0px;
+		  font-size: 16px;
+		  cursor: pointer;
+		}
+
+		/* Darker background on mouse-over */
+		.copy_button:hover {
+		  background-color: ghostwhite;
+		}
+		/* Create two equal columns that floats next to each other */
+		.left {
+		  float: left;
+		  width: 60%;
+		}
+
+		.right {
+		  float: right;
+		  width: 40%;
+		}
+		/* For snackbar notification */
+		#snackbar {
+		  visibility: hidden;
+		  min-width: 250px;
+		  margin-left: -125px;
+		  background-color: #333;
+		  color: #fff;
+		  text-align: center;
+		  border-radius: 2px;
+		  padding: 16px;
+		  position: fixed;
+		  z-index: 1;
+		  left: 50%;
+		  bottom: 30px;
+		  font-size: 17px;
+		}
+
+		#snackbar.show {
+		  visibility: visible;
+		  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+		  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+		}
+
+		@-webkit-keyframes fadein {
+		  from {bottom: 0; opacity: 0;} 
+		  to {bottom: 30px; opacity: 1;}
+		}
+
+		@keyframes fadein {
+		  from {bottom: 0; opacity: 0;}
+		  to {bottom: 30px; opacity: 1;}
+		}
+
+		@-webkit-keyframes fadeout {
+		  from {bottom: 30px; opacity: 1;} 
+		  to {bottom: 0; opacity: 0;}
+		}
+
+		@keyframes fadeout {
+		  from {bottom: 30px; opacity: 1;}
+		  to {bottom: 0; opacity: 0;}
+		}
+		@media only screen and (max-width: 900px) {
+			.search__input {
+				width: 60%;
+			}
+			.country_input {
+				width: 20%;
+			}
+			.message__input {
+				width: 80%;
+			}
+			.left {
+			  width: 100%;
+			}
+
+			.right {
+			  width: 100%;
+			}
+			.search__container {
+			  padding-top: 20px;
+			}
+		}
+
+		@media only screen and (max-width: 450px) {
+			.search__input {
+				width: 60%;
+			}
+			.country_input {
+				width: 20%;
+			}
+			.message__input {
+				width: 80%;
+			}
+			.left {
+			  width: 100%;
+			}
+
+			.right {
+			  width: 100%;
+			}
+			.search__container {
+			  padding-top: 20px;
+			}
+		}
 	</style>
 
 	<script>
@@ -244,11 +369,12 @@ session_start();
 </head>
 
 <body translate="no">
-
+	<div class="row">
+	<div class="left">
 	<div class="search__container">
 
 		<p class="search__title">
-			Go ahead, Check WhatsApp numbers
+			Generate whatsapp Link & QR code
 		</p>
 		<form id="myForm">
 			<div style="padding-top: 20px; display: flex; justify-content: center;">
@@ -475,106 +601,111 @@ session_start();
 					</optgroup>
 				</select>
 				
-				<input class="search__input" id="search__input" type="text" placeholder="9999999999" />
+				<input class="search__input" id="search__input" type="number" placeholder="9999999999" required />
 			</div>
-			<br>
-			<div class="text-xs-center">
-				<div class="g-recaptcha" id="rcaptcha" data-sitekey="6LcWpxseAAAAAID1Yxka1-cM6Lv8VbTOM0igd2Tx"></div>
+			<div style="padding-top: 20px; display: flex; justify-content: center;">
+				<textarea class="message__input" id="message__input" name="message" rows="4" cols="50" placeholder="Write message here..."></textarea>
 			</div>
-			<div style="padding-top: 20px;">
-				<button type="submit" id="check" value="Submit">Check</button>
+
+			<div style="padding-top: 30px;">
+				<button type="submit" class="submit_button" id="check" value="Submit">Generate</button>
 			</div>
 		</form>
 	</div>
 
 	<div class="credits__container">
-		<p class="credits__text">Check Number Provided by <a href="https://notbot.in" class="credits__link">NotBot</a></p>
+		<p class="credits__text">Generate Link & QR Provided by <a href="https://notbot.in" class="credits__link">NotBot</a></p>
 	</div>
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 	<script>
 		$(document).ready(function(){
+			var qr;
+			(function() {
+                    qr = new QRious({
+                    element: document.getElementById('qr-code'),
+                    size: 200,
+                    value: 'https://studytonight.com'
+                });
+            })();
 			$('#final').hide();
 			$("form").submit(function(e){
 				e.preventDefault();
-				if(grecaptcha.getResponse() == "") {
-					alert("Plese check the Captcha.");
-					document.getElementById("myForm").reset();
-				} else {
 					var numbers = document.getElementById("search__input").value;
 					var country = document.getElementById("country__input").value;
-					document.cookie = "numbers="+numbers;
-					document.cookie = "country="+country;
-					let cookies = document.cookie;
-					$("#final").load(location.href + " #final");
+					var phone = country + numbers;					
+					var message = document.getElementById("message__input").value;
+					message = message.replace(/\s+/g, '%20').toLowerCase();
+					var link = "https://wa.me/"+phone+"?text="+message+"";
 					$('#final').show();
-
-					<?php
-
-					$curl = curl_init();
-					$numbers = $_COOKIE["numbers"];
-					$country = $_COOKIE["country"];
-					curl_setopt_array($curl, array(
-						CURLOPT_URL => 'https://api.notbot.in/v1/check_number',
-						CURLOPT_RETURNTRANSFER => true,
-						CURLOPT_ENCODING => '',
-						CURLOPT_MAXREDIRS => 10,
-						CURLOPT_TIMEOUT => 0,
-						CURLOPT_FOLLOWLOCATION => true,
-						CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-						CURLOPT_CUSTOMREQUEST => 'POST',
-						CURLOPT_POSTFIELDS =>'{
-							"contacts": [
-							"+'.$country.' '.$numbers.'"
-							]
-						}',
-						CURLOPT_HTTPHEADER => array(
-							'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY0MTEyMzY1MCwianRpIjoiZDM2NjNjY2YtZjc3Ny00NTA5LWIzNTItY2Y2M2NhMzRjYzJiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImZvb0Bmb28uZm9vIiwibmJmIjoxNjQxMTIzNjUwfQ.GtOPPet_OOu_ojSavJ0cK9X_h-rfYgSYYfnQfcMQ61c',
-							'Content-Type: application/json'
-						),
-					));
-
-
-					$response = curl_exec($curl);
-					curl_close($curl);
-					$data = json_decode($response, true);
-
-					?>
-					document.getElementById("myForm").reset();
-					grecaptcha.reset();
-				}
+					document.getElementById("link").innerHTML = link;
+	                qr.set({
+	                    foreground: 'black',
+	                    size: 250,
+	                    value: link
+	                });
+					document.getElementById("myForm").reset();	
 			});
 		});
 	</script>
-
-	<div id="final">
+	<div class="right">
+	<div id="final" style="padding-bottom: 50px; padding-top: 24%;">
 		<table class="results">
-			<tr>
-				<th style="width:22%">Numbers</th>
-				<th>Exists on WhatsApp</th>
-				<th>Message on WhatsApp</th>
-				<th>Copy Number</th>
+
+			<tr>		
+				<td id="qr_code"><canvas id="qr-code"></canvas><a id="download" download="QR_code.jpg" href="" onclick="download_img(this);"></a></td>
+				<td><a id="download" download="QR_Code.jpg" href="" onclick="download_img(this);"><i class="fa fa-download" style="font-size:30px;color: #00B000;"></i></a>Download QR</td>	
 			</tr>
 
-			<?php  
-
-			foreach ($data as $value) {
-				echo '<tr>
-				<td>'.$value["input"].'</td>';
-				if ($value["status"]=="valid") {
-					echo '<td><i class="fa fa-check"></i></td>
-					<td><a href="https://api.whatsapp.com/send/?phone='.$value["wa_id"].'&text=Hey!!+Check+out+this+awesome+website+for+automation+https://notbot.in&app_absent=0"><i class="fa fa-whatsapp" style="font-size:24px;color:green;"></i></a></td>
-					<td>'.$value["wa_id"].'<i class="fa fa-copy" style="font-size:20px;color:green; padding-left: 9px;"></i></td>
-					</tr>';
-				} else {
-					echo '<td><i class="fa fa-remove"></i></td>
-					<td><i class="fa fa-remove"></i></td>
-					<td><i class="fa fa-remove"></i></td>
-					</tr>';
-				}
-			}
-
-			?>  
+			<tr>
+				<td id="link"></td>
+				<td id="copy_link"><button class="copy_button" onclick="copyToClipboard('#link')"><i style="font-size:30px;color: #00B000;" class="fa fa-copy"></i></button></td>
+				
+			</tr>
 
 		</table>
 	</div>
+</div>
+	<script>
+		$(document).ready(function(){
+			var canvas = document.getElementById("qr-code");
+			var ctx = canvas.getContext("2d");
+			var ox = canvas.width / 2;
+			var oy = canvas.height / 2;
+			ctx.font = "42px serif";
+			ctx.textAlign = "center";
+			ctx.textBaseline = "middle";
+			ctx.fillStyle = "#800";
+			ctx.fillRect(ox / 2, oy / 2, ox, oy);
+
+			download_img = function(el) {
+			  var image = canvas.toDataURL("image/jpg");
+			  el.href = image; 
+			};
+		});
+	</script>
+	<script>
+		$(document).ready(function(){
+		  $("#link").click(function(){
+		    var click_link = document.getElementById("link").innerHTML;
+		    window.open(click_link);
+    		return false;
+		  });
+		});
+	</script>
+	      <script id="rendered-js" >
+function copyToClipboard(element) {
+  var $temp = $("<input>");
+  $("body").append($temp);
+  $temp.val($(element).text()).select();
+  document.execCommand("copy");
+  $temp.remove();
+  var x = document.getElementById("snackbar");
+  x.className = "show";
+  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
+    </script>
+</div>
+<div id="snackbar">Link has been copied... </div>
 </body>
 </html>
