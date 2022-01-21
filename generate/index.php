@@ -609,6 +609,7 @@
 			<div style="padding-top: 20px; display: flex; justify-content: center;">
 				<textarea class="message__input" id="message__input" name="message" rows="4" cols="50" placeholder="Write message here..."></textarea>
 			</div>
+			<br>
                         <div class="text-xs-center">
 				<div class="g-recaptcha" id="rcaptcha" data-sitekey="6LcWpxseAAAAAID1Yxka1-cM6Lv8VbTOM0igd2Tx"></div>
 			</div>
