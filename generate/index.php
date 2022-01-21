@@ -270,6 +270,9 @@
 		  float: right;
 		  width: 40%;
 		}
+		.g-recaptcha {
+			display: inline-block;
+		}
 		/* For snackbar notification */
 		#snackbar {
 		  visibility: hidden;
@@ -606,7 +609,9 @@
 			<div style="padding-top: 20px; display: flex; justify-content: center;">
 				<textarea class="message__input" id="message__input" name="message" rows="4" cols="50" placeholder="Write message here..."></textarea>
 			</div>
-
+                        <div class="text-xs-center">
+				<div class="g-recaptcha" id="rcaptcha" data-sitekey="6LcWpxseAAAAAID1Yxka1-cM6Lv8VbTOM0igd2Tx"></div>
+			</div>
 			<div style="padding-top: 30px;">
 				<button type="submit" class="submit_button" id="check" value="Submit">Generate</button>
 			</div>
@@ -631,6 +636,10 @@
 			$('#final').hide();
 			$("form").submit(function(e){
 				e.preventDefault();
+				if(grecaptcha.getResponse() == "") {
+					alert("Plese check the Captcha.");
+					document.getElementById("myForm").reset();
+				} else {
 					var numbers = document.getElementById("search__input").value;
 					var country = document.getElementById("country__input").value;
 					var phone = country + numbers;					
@@ -639,12 +648,14 @@
 					var link = "https://wa.me/"+phone+"?text="+message+"";
 					$('#final').show();
 					document.getElementById("link").innerHTML = link;
-	                qr.set({
-	                    foreground: 'black',
-	                    size: 250,
-	                    value: link
-	                });
-					document.getElementById("myForm").reset();	
+					qr.set({
+					    foreground: 'black',
+					    size: 250,
+					    value: link
+					});
+					document.getElementById("myForm").reset();
+					grecaptcha.reset();
+				        }
 			});
 		});
 	</script>
